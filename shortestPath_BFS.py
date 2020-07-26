@@ -1,5 +1,7 @@
 #Find the shortest path between two
 #nodes in an unweighted graph using Breadth first Search algorithm
+# BFS algorithm has a time complexity of O(V+E)
+
 g = {  0:[1,9],
        1:[0,8],
        2:[3,8],
