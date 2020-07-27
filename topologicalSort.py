@@ -40,4 +40,26 @@ def topsort():
             # print(ordering)
     return ordering
 
-print(topsort())
+# Thoda sa optimized code ha neeche wala
+
+ordering = [0 for i in range(N)]
+
+def dfsoptimized(at,i):
+    V[at] = True
+    # print("Neighbours of {} are {}".format(at,g[at]))
+    for next in g[at]: 
+        if V[next] == False:
+            # print("Visited:",V)
+            i = dfsoptimized(next,i)
+    ordering[i] = at
+    return i-1
+def topsortoptimized():
+    i = N-1  #Index for ordering array
+
+    for at in range(N):  
+        #For each node in the graph run DFS on it if unvisited
+        # print("Calling DFS for:",at)
+        if V[at] == False:
+            i  = dfsoptimized(at,i)
+print(topsortoptimized())
+print(ordering)
