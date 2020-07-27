@@ -15,8 +15,9 @@ M = [
 ]
 R,C = len(M), len(M[0]) #Size of the matris M
 sr=sc=0 #coordinates of starting node
-rq = deque()
-cq = deque() #Empty queues for tracking rows and columns
+#Do not do rq = zq = dequeue() , they both will have the same memory wrna
+rq = deque() #Empty queue for tracking row values
+cq = deque() #Empty queue for tracking column values
 reached_end = False
 visited = [[False for i in range(C)] for i in range(R) ]
 
@@ -62,7 +63,6 @@ def solve():
     visited[sr][sc] = True
     while len(rq):
         # print("Queue stats:",list(zip(rq,cq)),end='\n')
-        # print(rq,cq)
         r = rq.popleft()
         c = cq.popleft()
         # print("Popped out left element:",r,c)
@@ -70,6 +70,9 @@ def solve():
             reached_end = True 
             break
         explore(r,c)
+        # print("Queue stats:",list(zip(rq,cq)))
+        # print("Nodes left",nodes_left_in_layer)
+        # print("Nodes next",nodes_in_next_layer)
         nodes_left_in_layer-=1
         if nodes_left_in_layer == 0:
             nodes_left_in_layer = nodes_in_next_layer
