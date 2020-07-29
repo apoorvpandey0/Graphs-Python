@@ -24,6 +24,7 @@ def dfs(at,visitedNodes):
             dfs(next[0],visitedNodes)
     # print('Visited nodes list:',visitedNodes)
     visitedNodes.append(at)
+
 def topSort():
     ordering = [0 for i in range(N)]
     i = N-1  #Index for ordering array
@@ -39,6 +40,7 @@ def topSort():
             # print(ordering)
     return ordering
 # print(topSort())
+
 def shortestPath(g,frm):
     N = len(g)  
     # visited = [False for i in range(N)]
@@ -55,12 +57,12 @@ def shortestPath(g,frm):
         for next in neighbours:
             next_key,next_value = next
             # print("     Checking for neigbhour ({},{})".format(next_key,next_value))
-            if next_value + DTable[node] < DTable[next_key]:
+            if DTable[node] + next_value < DTable[next_key]:
                 # print("         Updating DTable{} with {}".format(next_key,DTable[node] + next_value))
                 DTable[next_key] = DTable[node] + next_value
     return DTable
-from_node = 1
-# print("The shortest distances from node {} to all other nodes are:".format(from_node),shortestPath(g,from_node))
+from_node = 0
+print("The shortest distances from node {} to all other nodes are:".format(from_node),shortestPath(g,from_node))
 
 def longestPath(g):
     # First we need to negate all the edge values
@@ -71,7 +73,7 @@ def longestPath(g):
     # Now we need to run our shortestPath algorithms
     print(shortestPath(g,0))
     # Again negate the distanes returned by shortestPath to get the longest path !
-longestPath(g)
+# longestPath(g)
 
 
 
