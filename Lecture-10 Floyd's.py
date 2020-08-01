@@ -1,53 +1,66 @@
+# This is still under construction
+
 from sys import maxsize
-p = {  0:[1,9],
-       1:[0,8],
-       2:[3,8],
-       3:[2,4,5],
-       4:[3],
-       5:[3,6],
-       6:[5,7],
-       7:[8,11,10,6],
-       8:[7,1,9,2],
-       9:[0,8,10],
-       10:[7,11,9],
-       11:[7,10],
-       12:[]}
-# g = {1: [2, 3], 2: [1], 3: [1], 4: []}
-g = {1: [], 2: [
+N = 4   #Size of adjacency matrix
+dp = [[maxsize for i in range(N)] for j in range(N)]    # The memo table that will contain APSP soln
+agla = [[None for i in range(N)] for j in range(N)]     # Matrix used to reconstruct the shortest path
+
+def setup(m):
+    # dp = [[maxsize for i in range(N)] for j in range(N)]
+    # agla = [[None for i in range(N)] for j in range(N)]
+
+    for i in range(N):
+        for j in range(N):
+            dp[i][j] = m[i][j]
+            if m[i][j] != maxsize :
+                agla[i][j] = j
+
+def propogateNegativeCycles(dp,N):
+    for k in range(N):
+        for i in range(N):
+            for j in range(N):
+                if dp[i][k] + dp[k][j] < dp[i][j] :
+                    dp[i][j] = maxsize*-1
+                    agla[i][j] = -1
+
+def reconstructPath(start,end):
+    path = []
+    # Check if there exista a path b/w the start and end node
+    if dp[start][end] == maxsize: return path
+
+    at = start
+    # Reconstruct the path from agla matrix
+    while at!=end :
+        if at == -1 : return None
+        path.append(at)
+        at = agla[at][end]
+
+def floydWarshall(m):
+    setup(m)
+
+    # Execute FWSPA
+    for k in range(N):
+        for i in range(N):
+            for j in range(N):
+                if dp[i][k] + dp[k][j] < dp[i][j] :
+                    dp[i][j] = dp[i][k] + dp[k][j]
+                    agla[i][j] = agla[i][k]
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    3], 3: [2]}
-def bfs():
-    N = len(g)
-    V = [False for i in range(N+1)]
-    D = [maxsize for i in range(N+1)]
-    s = 2
-    q = [s]
-    D[s] = 0
-    while len(q):
-        node = q[0]
-        V[q[0]] = True
-        # print("For node {}".format(node))
-        neighbours = g[node]
-        for ele in neighbours:
-            if not V[ele] :
-                q.append(ele)
-                V[ele] = True
-                if D[node] + 6 < D[ele]:
-                    D[ele] = D[node] + 6 
-        q = q[1:]
-    for i in range(len(D)):
-        if D[i] == maxsize:
-            D[i] = -1
-    D.pop(s)
-    print(D[1:])
-bfs()
+    # Detect and propogate Negative cycles
+    # propogateNegativeCycles(dp,N)
+
+    # Return APSP matrix
+    return dp
+m =[ 
+    [0, 5, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 20, 0, 0, 30, 60, 0, 0, 0],
+    [0, 0, 0, 10, 75, 0, 0, 0, 0, 0],
+    [0, 0, -15, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 100],
+    [0, 0, 0, 0, 25, 0, 5, 0, 50, 0],
+    [0, 0, 0, 0, 0, 0, 0, -50, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, -10, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+]
+print(floydWarshall(m))
