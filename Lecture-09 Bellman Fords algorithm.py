@@ -5,6 +5,7 @@
 
 # The following implementation has a bad time complexity O(n^3)
 # A better approach would be to get all the edges first in a list and then loop over
+# Also note that the order of looping over the edges is not fixed
 from sys import maxsize
 import pdb
 
