@@ -30,7 +30,7 @@ def dijkstra(g,frm):
         # Mark the node as visited
         visited[index] = True
 
-        # if distance to the node we
+        # if minimum distance to the node(index) is already found then skip the node
         if dist[index] < minValue: continue
         
         # print("On node {} and len(pq) is {}".format(index,len(pq)))
@@ -38,7 +38,7 @@ def dijkstra(g,frm):
         # print(" PQ",pq)
         # print(" Distance",dist)
 
-        # Iterate over all of its neighbours
+        # Iterate over all of its(index) neighbours
         for next in g[index]:
             if visited[next[key]]: continue
             # print("Checking Neghbour:{} of {}".format(next,index))
@@ -56,7 +56,7 @@ def router(prev,end):
     while at!=None:
         path.append(prev[at])
         at = prev[at]
-    print(path)
+    print("Shortest Path:",path)
 
-print(dijkstra(g,0))
+print("dist,prev arrays:",dijkstra(g,0))
 

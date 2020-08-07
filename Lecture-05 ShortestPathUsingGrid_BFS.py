@@ -2,7 +2,7 @@
 # Here: 0 represents an empty cell
     #   1 represents a rock
     #   2 represents an exit
-
+# TODO:   1.Implement a Prev Matrix to track the exact path
 from collections import deque 
 
 # Global/class scope variables
@@ -13,11 +13,14 @@ M = [
     [0,0,1,1,0,0,0],
     [1,0,1,2,0,1,0]
 ]
+
 R,C = len(M), len(M[0]) #Size of the matris M
 sr=sc=0 #coordinates of starting node
+
 #Do not do rq = zq = dequeue() , they both will have the same memory wrna
 rq = deque() #Empty queue for tracking row values
 cq = deque() #Empty queue for tracking column values
+
 reached_end = False
 visited = [[False for i in range(C)] for i in range(R) ]
 
@@ -30,6 +33,7 @@ nodes_in_next_layer = 0
 dr = [-1,1,0,0]
 dc = [0,0,+1,-1]
 
+# prev = [[None for i in range(R)] for j in range(N)]
 def explore(r,c):
     global nodes_in_next_layer
     # print("Exploring:",(r,c))
@@ -45,10 +49,13 @@ def explore(r,c):
         if visited[nr][nc]: continue
         if M[nr][nc] == 1: continue
         # print(nr,nc)
+
         rq.append(nr)
         cq.append(nc)
+
         # print("position:",(nr,nc),"element:",M[nr][nc])
         # print("Updated queue with:",(nr,nc))
+
         visited[nr][nc] = True
         nodes_in_next_layer+=1
 

@@ -13,6 +13,7 @@ p = {
 }
 
 def listToMatrix(lst):
+    """For weighted Adjacency list -> weighted Matrix conversion"""
     N = len(lst)
     M = [[0 for i in range(N)] for j in range(N)]
 
@@ -22,12 +23,8 @@ def listToMatrix(lst):
             M[row][node] = edge
     return M
 
-a = listToMatrix(p)
-print(p)
-for i in a:
-    print(i)
-
 def matrixToList(M):
+    """For weighted Matrix -> weighted Adjacency list conversion"""
     N = len(M)
     lst = { row:[] for row in range(N) }
     for row in range(N):
@@ -36,4 +33,25 @@ def matrixToList(M):
                 lst[row].append([col,M[row][col]])
     print(lst)
     return lst
-matrixToList(a)    
+
+def listToEdge(lst):
+    """For weighted adjacency lists -> weighted edge list conversion"""
+    edges = []
+    for vertex in lst:
+        for edge in lst[vertex]:
+            edges.append([vertex]+edge)
+    return edges
+
+if __name__=='__main__':
+    # 1
+    # a = listToMatrix(p)
+    # print(p)
+    # for i in a:
+        # print(i)
+    
+    # 2
+    # matrixToList(a)    
+
+    # 3
+    # print(listToEdge(p))
+    print("Hello World")

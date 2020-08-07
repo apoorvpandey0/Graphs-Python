@@ -1,7 +1,7 @@
-#Find the shortest path between two
-#nodes in an unweighted graph using Breadth first Search algorithm
+# Find the shortest path between two
+# nodes in an unweighted or an all nodes same weight graph using Breadth first Search algorithm
 # BFS algorithm has a time complexity of O(V+E)
-
+from queue import deque
 g = {  0:[1,9],
        1:[0,8],
        2:[3,8],
@@ -19,15 +19,17 @@ n= len(g)
 def solve(s):
     # Here the variable 'q' is used as an analogy to our concept QUEUE that is used here
     # The value of 'q' will be used to store the nodes until their neighbours are visited
-    q = [s]
+    q = deque()
+    q.append(s)
     visited = [False for i in range(n)]
     visited[s] = True
     prev = [None for i in range(n)]
 
     while len(q):
         # print(prev)
-        # print(q)
-        node = q[0]
+
+        # Get the next node to visit
+        node = q.popleft()
         neighbours = g[node]
 
         #Visit each neighbour mark them visited and set their previous node with prev[next] = node
@@ -35,10 +37,8 @@ def solve(s):
             if not visited[next]:
                 q.append(next)
                 visited[next] = True
+                # print("Prev[{}]  =  {}".format(next,node))
                 prev[next] = node
-
-        #Start from the beginning of the queue
-        q = q[1:]
     return prev
 
 def reconstructPath(s,e,prev):
@@ -47,7 +47,7 @@ def reconstructPath(s,e,prev):
     at = e
     while at!=None :
         path.append(at)
-        print(path)
+        # print(path)
         at = prev[at]
     path= path[::-1]
 
