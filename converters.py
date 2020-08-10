@@ -31,7 +31,7 @@ def matrixToList(M):
         for col in range(N):
             if M[row][col]:
                 lst[row].append([col,M[row][col]])
-    print(lst)
+    # print(lst)
     return lst
 
 def listToEdge(lst):

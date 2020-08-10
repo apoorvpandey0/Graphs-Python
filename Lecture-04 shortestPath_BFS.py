@@ -39,6 +39,7 @@ def solve(s):
                 visited[next] = True
                 # print("Prev[{}]  =  {}".format(next,node))
                 prev[next] = node
+    print("Prev:",prev)
     return prev
 
 def reconstructPath(s,e,prev):

@@ -1,3 +1,7 @@
+# Dijkstra's Algorithm
+# Time Complexity of Dijkstra's Algorithm is O ( V 2 ) 
+# but with min-priority queue it drops down to O ( V + E l o g V ) .
+
 from sys import maxsize
 g = {
     0:[ [1,3], [2,6] ],
@@ -56,7 +60,7 @@ def router(prev,end):
     while at!=None:
         path.append(prev[at])
         at = prev[at]
-    print("Shortest Path:",path)
+    # print("Shortest Path:",path)
 
-print("dist,prev arrays:",dijkstra(g,0))
+print("dist,prev arrays:",dijkstra(g,0)[-1][-1])
 

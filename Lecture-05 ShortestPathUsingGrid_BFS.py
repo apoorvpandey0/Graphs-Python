@@ -13,9 +13,13 @@ M = [
     [0,0,1,1,0,0,0],
     [1,0,1,2,0,1,0]
 ]
+# Path = [0,0] -> [0,1] -> [0,2] -> [1,2] -> 
 
 R,C = len(M), len(M[0]) #Size of the matris M
 sr=sc=0 #coordinates of starting node
+
+prev = [ [None for i in range(C)] for j in range(R)]
+# print(prev)
 
 #Do not do rq = zq = dequeue() , they both will have the same memory wrna
 rq = deque() #Empty queue for tracking row values
@@ -36,6 +40,7 @@ dc = [0,0,+1,-1]
 # prev = [[None for i in range(R)] for j in range(N)]
 def explore(r,c):
     global nodes_in_next_layer
+    global prev
     # print("Exploring:",(r,c))
     for i in range(len(dr)):   #For each direction
         nr = r + dr[i]         #New row = initial row + dr
@@ -52,7 +57,7 @@ def explore(r,c):
 
         rq.append(nr)
         cq.append(nc)
-
+        prev[nr][nc] = [r,c]
         # print("position:",(nr,nc),"element:",M[nr][nc])
         # print("Updated queue with:",(nr,nc))
 
@@ -82,11 +87,20 @@ def solve():
         # print("Nodes next",nodes_in_next_layer)
         nodes_left_in_layer-=1
         if nodes_left_in_layer == 0:
+            # print("Layer",list(zip(rq,cq)))
             nodes_left_in_layer = nodes_in_next_layer
             nodes_in_next_layer = 0
             move_count+=1
     if reached_end:
         return move_count
     return -1
-      
+def router(prev,s=[],e=[]):
+    node = e
+    path = [node]
+    while node != s:
+        node = prev[node[0]][node[1]]
+        path.append(node)
+    return path
+
 print("Steps required to reach the end:",solve())
+print("Path is:",router(prev,[0,0],[4,3]))
