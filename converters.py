@@ -24,7 +24,7 @@ def listToMatrix(lst):
     return M
 
 def matrixToList(M):
-    """For weighted Matrix -> weighted Adjacency list conversion"""
+    """For weighted Adjacency Matrix -> weighted Adjacency list conversion"""
     N = len(M)
     lst = { row:[] for row in range(N) }
     for row in range(N):
