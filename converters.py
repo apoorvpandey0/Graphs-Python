@@ -42,6 +42,21 @@ def listToEdge(lst):
             edges.append([vertex]+edge)
     return edges
 
+# convert edge list to a adjacency list
+def edgeToList(edges):
+    """For edge list -> adjacency list conversion"""
+    graph = dict()
+    for edge in edges:
+        if edge[0] not in graph:
+            graph[edge[0]] = set()
+        if edge[1] not in graph:
+            graph[edge[1]] = set()
+        
+        graph[edge[0]].add(edge[1])   
+        graph[edge[1]].add(edge[0])   
+        
+    return graph
+
 if __name__=='__main__':
     # 1
     # a = listToMatrix(p)
@@ -55,3 +70,4 @@ if __name__=='__main__':
     # 3
     # print(listToEdge(p))
     print("Hello World")
+    print(edgeToList([[1,2],[2,3],[3,4],[2,4]]))
